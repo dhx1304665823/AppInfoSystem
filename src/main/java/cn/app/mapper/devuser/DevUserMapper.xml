@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.app.mapper.devuser.DevUserMapper">
+    <select id="findCodes" resultType="devUser">
+        select * FROM  dev_user
+        where devCode=#{devCode}
+    </select>
+    <select id="findPaw" resultType="devUser">
+         select * FROM  dev_user
+        where devCode=#{devCode} and devPassword=#{devPassword}
+    </select>
+</mapper>

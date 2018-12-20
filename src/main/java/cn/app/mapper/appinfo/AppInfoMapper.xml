@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.app.mapper.appinfo.AppInfoMapper">
+
+    <select id="findPageAll" resultType="appInfo">
+     SELECT a.*,
+        (SELECT valueName FROM data_dictionary WHERE typeCode='APP_FLATFORM' AND valueId=a.flatformId) flatformName,
+        (SELECT categoryName FROM app_category WHERE id=a.categoryLevel1) cname1,
+        (SELECT categoryName FROM app_category WHERE id=a.categoryLevel2) cname2,
+        (SELECT categoryName FROM app_category WHERE id=categoryLevel3) cname3,
+        (SELECT valueName FROM data_dictionary WHERE typeCode='APP_STATUS' AND valueId=a.status) statusName,
+        (SELECT versionNo FROM app_version WHERE id=a.versionId) versionName
+    FROM app_info a
+        <where>
+            <if test="softwareName!=null">
+                and a.softwareName  LIKE '%' #{softwareName} '%'
+            </if>
+            <if test="status!=0 and status!=null">
+                and a.status=#{status}
+            </if>
+            <if test="flatformId!=null and flatformId!=0">
+                and a.flatformId=#{flatformId}
+            </if>
+            <if test="categoryLevel1!=null and categoryLevel1!=0">
+                and a.categoryLevel1=#{categoryLevel1}
+            </if>
+            <if test="categoryLevel2!=null and categoryLevel2!=0">
+                and a.categoryLevel2=#{categoryLevel2}
+            </if>
+            <if test="categoryLevel3!=null and categoryLevel3!=0">
+                and a.categoryLevel3=#{categoryLevel3}
+            </if>
+        </where>
+     ORDER BY id desc
+        LIMIT #{pageNo},#{pageSize}
+</select>
+    <select id="findCount" resultType="int">
+        SELECT COUNT(1) FROM app_info
+        <where>
+            <if test="softwareName!=null">
+               and softwareName  LIKE '%' #{softwareName} '%'
+            </if>
+            <if test="status!=0 and status!=null">
+                 and status=#{status}
+            </if>
+            <if test="flatformId!=null and flatformId!=0">
+                and flatformId=#{flatformId}
+            </if>
+            <if test="categoryLevel1!=null and categoryLevel1!=0">
+                and categoryLevel1=#{categoryLevel1}
+            </if>
+            <if test="categoryLevel2!=null and categoryLevel2!=0">
+                and categoryLevel2=#{categoryLevel2}
+            </if>
+            <if test="categoryLevel3!=null and categoryLevel3!=0">
+                and categoryLevel3=#{categoryLevel3}
+            </if>
+        </where>
+    </select>
+    <insert id="add" parameterType="appInfo">
+
+    </insert>
+    <select id="findByAPKName" resultType="appInfo">
+        select * from app_info
+         where APKName=#{APKName}
+    </select>
+</mapper>
