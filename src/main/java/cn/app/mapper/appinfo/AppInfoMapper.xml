@@ -60,10 +60,18 @@
         </where>
     </select>
     <insert id="add" parameterType="appInfo">
-
+           INSERT INTO app_info(softwareName,APKName,supportROM,interfaceLanguage,softwareSize,devId,appInfo,
+          `status`,flatformId,categoryLevel1,categoryLevel2,categoryLevel3,downloads,createdBy,
+         logoPicPath,logoLocPath,versionId)
+          values(#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{softwareSize},#{devId},#{appInfo},#{status},#{flatformId},#{categoryLevel1},#{categoryLevel2},#{categoryLevel3},
+          #{downloads},#{createdBy}, #{logoPicPath},#{logoLocPath}, #{versionId})
     </insert>
     <select id="findByAPKName" resultType="appInfo">
         select * from app_info
          where APKName=#{APKName}
+    </select>
+    <select id="findById" resultType="appInfo">
+         SELECT a.*,d.`valueName` statusName FROM app_info a,data_dictionary d
+         WHERE a.status=d.valueId AND d.typeCode='APP_STATUS' AND a.id=#{id}
     </select>
 </mapper>

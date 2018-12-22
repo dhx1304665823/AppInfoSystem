@@ -18,4 +18,5 @@ public interface AppInfoMapper {
     int add(AppInfo appInfo);
 
     AppInfo findByAPKName(String APKName);
+    AppInfo findById(int id);
 }

@@ -2,6 +2,7 @@ package cn.app.controller.appinfo;
 
 import cn.app.pojo.AppInfo;
 import cn.app.pojo.Category;
+import cn.app.pojo.DevUser;
 import cn.app.pojo.Dictionary;
 import cn.app.service.CategoryService.CategoryService;
 import cn.app.service.Dictionary.DictionaryService;
@@ -13,14 +14,13 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,16 +105,16 @@ public class AppInfoController {
 
 
     @RequestMapping(value = "add")
-    public String add(){
+    public String add( AppInfo appInfo){
 
         return "appInfoAdd";
     }
 
     @RequestMapping(value = "addApp",method = RequestMethod.POST)
-    public String addAppInfo(AppInfo appInfo, HttpSession session, HttpServletRequest request, MultipartFile at){
+    public String addAppInfo(AppInfo appInfo, HttpSession session, HttpServletRequest request,@RequestParam(value="a_logoPicPath",required = false) MultipartFile at){
         String picPath=null;
-
-        if(at.isEmpty()){
+            String logoLocPath=null;
+        if(!at.isEmpty()){
             String path=request.getSession().getServletContext().getRealPath("statics"+ File.separator+"images");
             String fileName=at.getOriginalFilename();//原文件名
             String prefix= FilenameUtils.getExtension(fileName);//原文件后缀名
@@ -132,29 +132,38 @@ public class AppInfoController {
                 }catch (Exception e){
                     e.printStackTrace();
                     request.setAttribute("fileUploadError","上传失败");
-                    return "";
+                    return "redirect:add";
                 }
-                picPath=path+File.separator+fileName;
+                picPath = request.getContextPath()+"/statics/uploadfiles/"+fileName;
+                logoLocPath=path+File.separator+fileName;
             }else{
                 request.setAttribute("fileUploadError","上传图片格式不正确");
-                return "";
+                return "redirect:add";
             }
 
         }else{
             request.setAttribute("fileUploadError","必须上传文件 ");
-            return "";
+            return "redirect:add";
         }
-        return "";
+        DevUser devUser=(DevUser) session.getAttribute("user");
+        appInfo.setDevId(devUser.getId());
+        appInfo.setCreatedBy(devUser.getId());
+        appInfo.setCreationDate(new Date());
+        appInfo.setLogoPicPath(picPath);
+        appInfo.setLogoLocPath(logoLocPath);
+        appInfo.setStatus(1);
+        appInfoService.add(appInfo);
+        return "redirect:list";
     }
 
     @RequestMapping("apk")
     @ResponseBody
-    public Object apk(String apkName){
+    public Object apk(String APKName){
         Map<String,String> map=new HashMap<String, String>();
-        if(StringUtils.isNullOrEmpty(apkName)){
+        if(StringUtils.isNullOrEmpty(APKName)){
              map.put("APKName","empty");
         }else{
-            AppInfo appInfo=appInfoService.getByAPKName(apkName);
+            AppInfo appInfo=appInfoService.getByAPKName(APKName);
             if (appInfo==null){
                 map.put("APKName","noexist");
             }else{
@@ -162,6 +171,12 @@ public class AppInfoController {
             }
         }
         return JSONArray.toJSONString(map);
+    }
+
+    @RequestMapping("upd")
+    public String upd(String id,Model model){
+        model.addAttribute("appInfo",appInfoService.getById(Integer.parseInt(id)));
+        return "appInfoUpd";
     }
 
 }
