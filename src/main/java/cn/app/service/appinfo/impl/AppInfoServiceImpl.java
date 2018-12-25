@@ -29,7 +29,52 @@ public class AppInfoServiceImpl implements AppInfoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AppInfo getByAPKName(String APKName) {
         return appInfoMapper.findByAPKName(APKName);
+    }
+
+    @Override
+    public int add(AppInfo appInfo) {
+        return appInfoMapper.add(appInfo);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AppInfo getById(int id) {
+        return appInfoMapper.findById(id);
+    }
+
+    @Override
+    public int delLog(int id) {
+        return appInfoMapper.delLog(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AppInfo getAppInfo(int id, String APKName) {
+        return appInfoMapper.getAppInfo(id,APKName);
+    }
+
+    @Override
+    public int modify(AppInfo appInfo) {
+        return appInfoMapper.modify(appInfo);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Appinfo> adminlist(String softwareName, Integer flatformId, Integer categoryLevel1, Integer categoryLevel2, Integer categoryLevel3, Integer pageNo, Integer pageSize) {
+        return appInfoMapper.adminList(softwareName,flatformId,categoryLevel1,categoryLevel2,categoryLevel3,pageNo,pageSize);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getadminCount(String softwareName, Integer flatformId, Integer categoryLevel1, Integer categoryLevel2, Integer categoryLevel3) {
+        return appInfoMapper.adminCount(softwareName,flatformId,categoryLevel1,categoryLevel2,categoryLevel3);
+    }
+
+    @Override
+    public int updVersion(Integer versionId, Integer id) {
+        return appInfoMapper.updVersion(versionId,id);
     }
 }

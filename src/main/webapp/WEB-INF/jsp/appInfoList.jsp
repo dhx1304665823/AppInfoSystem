@@ -45,7 +45,7 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select name="status" class="form-control">
-                                <option value="0">--请选择--</option>
+                                <option value="">--请选择--</option>
                                 <c:forEach items="${dictionaryList}" var="dlist">
                                     <option value="${dlist.valueId}"  <c:if test="${statuss==dlist.valueId}">selected="selected"</c:if>>${dlist.valueName}</option>
                                 </c:forEach>
@@ -58,7 +58,7 @@
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">所属平台</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select name="flatformId" class="form-control">
-                                <option value="0">--请选择--</option>
+                                <option value="">--请选择--</option>
                                   <c:forEach items="${dictionaryList2}" var="dlist">
                                       <option value="${dlist.valueId}" <c:if test="${flatformIds==dlist.valueId}">selected="selected"</c:if>>${dlist.valueName}</option>
 
@@ -71,7 +71,7 @@
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">一级分类</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select name="categoryLevel1" class="form-control" id="categoryLevel1">
-                                <option value="0">--请选择--</option>
+                                <option value="">--请选择--</option>
                                 <c:forEach items="${categoryList}" var="cList">
                                     <option value="${cList.id}" <c:if test="${categoryLevel1s==cList.id}">selected="selected"</c:if>>${cList.categoryName}</option>
                                 </c:forEach>
@@ -163,16 +163,25 @@
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                        <li>
+
+                                    <c:choose>
+                                        <c:when test="${app.status == 2 || app.status == 5}">
+                                            <a class="saleSwichOpen" saleSwitch="open" appinfoid=${app.id }  appsoftwarename=${app.softwareName } data-toggle="tooltip" data-placement="top" title="" data-original-title="恭喜您，您的审核已经通过，您可以点击上架发布您的APP">上架</a>
+                                        </c:when>
+                                        <c:when test="${app.status == 4}">
+                                            <a class="saleSwichClose" saleSwitch="close" appinfoid=${app.id }  appsoftwarename=${app.softwareName } data-toggle="tooltip" data-placement="top" title="" data-original-title="您可以点击下架来停止发布您的APP，市场将不提供APP的下载">下架</a>
+                                        </c:when>
+                                    </c:choose>
+
+                                    <li><a href="../version/addlist?id=${app.id}">新增版本</a></li>
+                                    </li>
+
+                                        <li><a href="../version/updlist?id=${app.id}&vid=${app.versionId}">修改版本</a></li>
 
 
 
-                                        <li><a href="#">上架</a></li>
-
-                                    <li><a href="#">新增版本</a></li>
-
-                                    <li><a href="#">修改版本</a></li>
-
-                                    <li><a href="#">修改</a></li>
+                                    <li><a class="modifyAppInfo" appinfoid="${app.id}" statusname="${app.statusName}" status="${app.status}">修改</a></li>
 
                                     <li><a href="#">查看</a></li>
 
@@ -217,6 +226,7 @@
 
 <%@ include file="common/footer.jsp"%>
 <script src="../statics/localjs/applist.js"></script>
+<script src="../statics/localjs/appinfolist.js"></script>
 </body>
 
 </html>

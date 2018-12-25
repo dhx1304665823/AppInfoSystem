@@ -1,23 +1,25 @@
 package cn.app.pojo;
 
+import java.util.Date;
+
 public class AppInfo {
     private int id;
     private String softwareName;
     private String APKName;
     private String supportROM;
     private String interfaceLanguage;
-    private String softwareSize;
+    private Integer softwareSize;
     private String updateDate;
     private int devId;
     private String appInfo;
-    private String status;
+    private Integer status;
     private String onSaleDate;
     private String offSaleDate;
     private int flatformId;
     private int categoryLevel3;
     private int downloads;
     private int createdBy;
-    private String creationDate;
+    private Date creationDate;
     private int modifyBy;
     private String modifyDate;
     private int categoryLevel1;
@@ -120,11 +122,11 @@ public class AppInfo {
         this.interfaceLanguage = interfaceLanguage;
     }
 
-    public String getSoftwareSize() {
+    public Integer getSoftwareSize() {
         return softwareSize;
     }
 
-    public void setSoftwareSize(String softwareSize) {
+    public void setSoftwareSize(Integer softwareSize) {
         this.softwareSize = softwareSize;
     }
 
@@ -152,11 +154,11 @@ public class AppInfo {
         this.appInfo = appInfo;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -208,11 +210,11 @@ public class AppInfo {
         this.createdBy = createdBy;
     }
 
-    public String getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

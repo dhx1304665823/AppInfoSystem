@@ -13,4 +13,16 @@ public interface AppInfoService {
                  Integer flatformId, Integer categoryLevel1,
                  Integer categoryLevel2,Integer categoryLevel3);
     AppInfo getByAPKName(String APKName);
+    int add(AppInfo appInfo);
+    AppInfo getById(int id);
+    int delLog(int id);
+    AppInfo getAppInfo(int id, String APKName);
+    int modify(AppInfo appInfo);
+    List<Appinfo> adminlist(String softwareName,
+                              Integer flatformId, Integer categoryLevel1,
+                              Integer categoryLevel2,Integer categoryLevel3, Integer pageNo, Integer pageSize);
+    int getadminCount(String softwareName,
+                 Integer flatformId, Integer categoryLevel1,
+                 Integer categoryLevel2,Integer categoryLevel3);
+    int updVersion(Integer versionId,Integer id);
 }
