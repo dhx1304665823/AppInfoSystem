@@ -21,7 +21,7 @@ public class AppInfo {
     private int createdBy;
     private Date creationDate;
     private int modifyBy;
-    private String modifyDate;
+    private Date modifyDate;
     private int categoryLevel1;
     private int categoryLevel2;
     private String logoPicPath;
@@ -226,11 +226,11 @@ public class AppInfo {
         this.modifyBy = modifyBy;
     }
 
-    public String getModifyDate() {
+    public Date getModifyDate() {
         return modifyDate;
     }
 
-    public void setModifyDate(String modifyDate) {
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 

@@ -43,4 +43,14 @@ public class VersionServiceImpl implements VersionService {
     public int updateVersion(Version version) {
         return versionMapper.updateVersion(version);
     }
+
+    @Override
+    public int delApp(int appId) {
+        return versionMapper.delApp(appId);
+    }
+
+    @Override
+    public int updStatus(int id, int sid) {
+        return versionMapper.updStatus(id,sid);
+    }
 }

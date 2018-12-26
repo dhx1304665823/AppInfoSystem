@@ -179,4 +179,14 @@
         where id=#{id}
     </update>
 
+    <delete id="del" parameterType="int">
+        DELETE from app_info where id=#{id}
+    </delete>
+    <update id="appUpdStatus" parameterType="appInfo">
+        update app_info
+              set status=#{status},modifyBy=#{modifyBy},modifyDate=#{modifyDate}
+       where id=#{id}
+
+    </update>
+
 </mapper>

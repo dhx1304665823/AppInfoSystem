@@ -51,18 +51,18 @@ public class VersionController {
                 } catch (Exception e) {
                     e.printStackTrace();
                     request.setAttribute("fileUploadError", "上传失败");
-                    return "redirect:";
+                    return "redirect:addlist?id="+version.getAppId();
                 }
                 picPath = request.getContextPath() + "/statics/uploadfiles/" + fileName;
                 logoLocPath = path + File.separator + fileName;
             } else {
                 request.setAttribute("fileUploadError", "上传文件格式不正确");
-                return "redirect:";
+                return "redirect:addlist?id="+version.getAppId();
             }
 
         } else {
             request.setAttribute("fileUploadError", "必须上传apk文件 ");
-            return "redirect:add";
+            return "redirect:addlist?id="+version.getAppId();
         }
        DevUser devUser=(DevUser) session.getAttribute("user");
 

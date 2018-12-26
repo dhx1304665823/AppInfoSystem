@@ -53,4 +53,14 @@
         set downloadLink=null,apkFileName=null,apkLocPath=NULL
         where id=#{id}
     </update>
+
+    <delete id="delApp" parameterType="int">
+        DELETE from app_version where appId=#{appId}
+    </delete>
+
+    <update id="updStatus" parameterType="int">
+        update app_version
+        set publishStatus=#{sid}
+        where id=#{id}
+    </update>
 </mapper>

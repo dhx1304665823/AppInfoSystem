@@ -10,4 +10,6 @@ public interface VersionService {
     Version getById(int id);
     int delAKP(int id);
     int updateVersion(Version version);
+    int delApp(int appId);
+    int updStatus( int id,  int sid);
 }

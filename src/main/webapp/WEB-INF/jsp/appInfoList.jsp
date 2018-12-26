@@ -153,7 +153,7 @@
                             <td>${app.softwareSize}</td>
                             <td>${app.flatformName}</td>
                             <td>${app.cname1}->${app.cname2}->${app.cname3}</td>
-                            <td>${app.statusName}</td>
+                            <td><span id="appInfoStatus${app.id}">${app.statusName}</span></td>
                             <td>${app.downloads}</td>
                             <td>${app.versionName}</td>
                             <td><div class="btn-group">
@@ -175,17 +175,17 @@
                                     </c:choose>
 
                                     <li><a href="../version/addlist?id=${app.id}">新增版本</a></li>
+
+
                                     </li>
 
-                                        <li><a href="../version/updlist?id=${app.id}&vid=${app.versionId}">修改版本</a></li>
-
-
+                                        <li><a href="" class="modifyVersion" appinfoid="${app.id}" versionid="${app.versionId}">修改版本</a></li>
 
                                     <li><a class="modifyAppInfo" appinfoid="${app.id}" statusname="${app.statusName}" status="${app.status}">修改</a></li>
 
-                                    <li><a href="#">查看</a></li>
+                                    <li><a href="view?id=${app.id}">查看</a></li>
 
-                                    <li><a href="#">删除</a></li>
+                                    <li><a href="#" class="deleteApp" appinfoid="${app.id}" appsoftwarename="${app.softwareName}">删除</a></li>
 
                                     <li class="divider"></li>
                                     <li><a href="#">Separated link</a>
@@ -225,7 +225,6 @@
 </div>
 
 <%@ include file="common/footer.jsp"%>
-<script src="../statics/localjs/applist.js"></script>
 <script src="../statics/localjs/appinfolist.js"></script>
 </body>
 

@@ -25,4 +25,7 @@ public interface AppInfoService {
                  Integer flatformId, Integer categoryLevel1,
                  Integer categoryLevel2,Integer categoryLevel3);
     int updVersion(Integer versionId,Integer id);
+    int del(int id);
+
+    int appUpdStatus(AppInfo appInfo);
 }

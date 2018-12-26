@@ -4,6 +4,7 @@ import cn.app.pojo.*;
 import cn.app.service.CategoryService.CategoryService;
 import cn.app.service.Dictionary.DictionaryService;
 import cn.app.service.appinfo.AppInfoService;
+import cn.app.service.version.VersionService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.mysql.jdbc.StringUtils;
@@ -31,6 +32,8 @@ public class AppInfoController {
     private DictionaryService dictionaryService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private VersionService versionService;
 
     @RequestMapping("list")
     public String page(String softwareName,String status,
@@ -297,6 +300,58 @@ public class AppInfoController {
         session.setAttribute("dictionaryList2", dictionaryService.getfla()); //所属平台
         session.setAttribute("categoryList",categoryService.getById(0));//一级分类
         return "adminList";
+    }
+
+    @RequestMapping("view")
+    public String view(String id,Model model){
+        model.addAttribute("appInfo",appInfoService.getAppInfo(Integer.parseInt(id),null));
+        model.addAttribute("vlist",versionService.findByIdlist(Integer.parseInt(id)));
+        return "appInfoview";
+    }
+
+    @RequestMapping("delapp")
+    @ResponseBody
+    public Object del(String id,Model model){
+            if (id==null || id==""){
+                     model.addAttribute("delResult","notexist");
+            }else{
+                 if (appInfoService.del(Integer.parseInt(id))>0){
+                     model.addAttribute("delResult","true");
+                 }else{
+                     model.addAttribute("delResult","false");
+                 }
+            }
+        return JSONArray.toJSONString(model);
+    }
+
+    @RequestMapping(value="sale",method = RequestMethod.POST)
+    @ResponseBody
+    public Object shang(String appId,HttpSession session,Model model){
+        int appidint=0;
+        try {
+             appidint=Integer.parseInt(appId);
+        }catch (Exception e){
+            appidint=0;
+        }
+
+        model.addAttribute("errorCode","0");
+        if (appidint>0){
+           DevUser devUser=(DevUser)session.getAttribute("user");
+           AppInfo appInfo=new AppInfo();
+           appInfo.setId(appidint);
+           appInfo.setModifyBy(devUser.getId());
+
+           if (appInfoService.appUpdStatus(appInfo)>0){
+                model.addAttribute("resultMsg","success");
+           }else{
+               model.addAttribute("resultMsg","failed");
+           }
+
+        }else{
+            model.addAttribute("errorCode","param000001");
+        }
+
+        return JSONArray.toJSONString(model);
     }
 
 }

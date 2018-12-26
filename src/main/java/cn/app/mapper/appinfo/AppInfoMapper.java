@@ -34,6 +34,10 @@ public interface AppInfoMapper {
 
     int updVersion(@Param("versionId") Integer versionId,@Param("id") Integer id);
 
+    int del(int id);
+
+    int appUpdStatus(AppInfo appInfo);
+
 
 
 
